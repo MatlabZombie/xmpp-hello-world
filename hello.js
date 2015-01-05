@@ -10,7 +10,7 @@ var Hello = {
 $(function () {
 
 	$("#login_dialog").dialog({
-		console.log("connect to xmpp")
+		console.log("connect to xmpp");
 		autoOpen: true,
 		draggable: false,
 		modal: true,
