@@ -10,6 +10,7 @@ var Hello = {
 $(function () {
 
 	$("#login_dialog").dialog({
+		console.log("connect to xmpp")
 		autoOpen: true,
 		draggable: false,
 		modal: true,
@@ -27,7 +28,7 @@ $(function () {
 });
 
 	$(document).bind('connect', function (ev, data) {
-		console.log("printing something");
+		console.log("trying to bind");
 		var connection = new Strophe.Connection("http://bosh.metajack.im:5280/xmpp-httpbind");
 		connection.connect(data.jid, data.password, function (status) {
 			if (status === Strophe.Status.CONNECTED) {
@@ -41,10 +42,12 @@ $(function () {
 	
 
 	$(document).bind('connected', function () {
+		console.log("Connection established")
 		Hello.log("Connection established")
 	});
 
 	$(document).bind('disconnected', function () {
+		console.log("Connection terminated");
 		Hello.log("Connection terminated");
 		Hello.connection = null;
 	});
