@@ -10,7 +10,6 @@ var Hello = {
 $(function () {
 
 	$("#login_dialog").dialog({
-		console.log("connect to xmpp");
 		autoOpen: true,
 		draggable: false,
 		modal: true,
@@ -24,7 +23,6 @@ $(function () {
 			}
 		}
 	});
-
 });
 
 	$(document).bind('connect', function (ev, data) {
@@ -42,8 +40,8 @@ $(function () {
 	
 
 	$(document).bind('connected', function () {
-		console.log("Connection established")
-		Hello.log("Connection established")
+		console.log("Connection established");
+		Hello.log("Connection established");
 	});
 
 	$(document).bind('disconnected', function () {
