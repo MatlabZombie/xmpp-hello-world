@@ -16,18 +16,18 @@ $(function () {
 		title: "Connect to XMPP",
 		buttons: {
 			Connect: function () {
-				$(document).trigger('connect', 
+				$(document).trigger("connect", 
 					{ jid: $("#jid").val(), password: $("#password").val() }
 				);
-				$(this).dialog(" close");
+				$(this).dialog("close");
 			}
 		}
 	});
 });
 
-	$(document).bind('connect', function (ev, data) {
-		console.log("trying to bind this jid: "$(data.jid)"");
-		var connection = new Strophe.Connection("http://bosh.metajack.im:5280/xmpp-httpbind");
+	$(document).bind("connect", function (ev, data) {
+		console.log("trying to bind this jid:");
+		var connection = new Strophe.Connection("http://localhost:5280/http-bind");
 		connection.connect(data.jid, data.password, function (status) {
 			if (status === Strophe.Status.CONNECTED) {
 				$(document).trigger('connected');
@@ -39,13 +39,13 @@ $(function () {
 	});
 	
 
-	$(document).bind('connected', function () {
+	$(document).bind("connected", function () {
 		// inform the user
 		console.log("Connection established");
 		Hello.log("Connection established");
 	});
 
-	$(document).bind('disconnected', function () {
+	$(document).bind("disconnected", function () {
 		// remove dead connection object
 		console.log("Connection terminated");
 		Hello.log("Connection terminated");
