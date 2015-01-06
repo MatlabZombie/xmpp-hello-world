@@ -26,7 +26,7 @@ $(function () {
 });
 
 	$(document).bind('connect', function (ev, data) {
-		console.log("trying to bind "$(data.jid"));
+		console.log("trying to bind this jid: " $(data.jid "));
 		var connection = new Strophe.Connection("http://bosh.metajack.im:5280/xmpp-httpbind");
 		connection.connect(data.jid, data.password, function (status) {
 			if (status === Strophe.Status.CONNECTED) {
