@@ -40,11 +40,13 @@ $(function () {
 	
 
 	$(document).bind('connected', function () {
+		// inform the user
 		console.log("Connection established");
 		Hello.log("Connection established");
 	});
 
 	$(document).bind('disconnected', function () {
+		// remove dead connection object
 		console.log("Connection terminated");
 		Hello.log("Connection terminated");
 		Hello.connection = null;
