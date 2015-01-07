@@ -14,7 +14,7 @@ var Hello = {
 			id: "ping1"
 		}).c("ping", {xmlns: "urn:xmpp:ping"});
 		Hello.log("sending ping to : " + to + ".");
-		Hello.start_time = (new Date()).getTime();
+		
 		Hello.connection.send(message);
 	},
 
@@ -69,12 +69,17 @@ $(function () {
 		var handler = Hello.connection.addHandler(Hello.handle_pong, null, "iq", null, "ping1");
 		console.log("The handler for connection is: ");
 		console.dir(handler);
-		Hello.send_ping(Strophe.getDomainFromJID(Hello.connection.jid));
+		var domain = Strophe.getDomainFromJid(Hello.connection.jid);
+		Hello.start_time = (new Date()).getTime()
+		Hello.send_ping(domain);
+		 Hello.send_ping(domain);
+		  Hello.send_ping(domain); 
+		  Hello.send_ping(domain);
+		console.log("finished with ping requests");
 	});
 
 	$(document).bind("disconnected", function () {
 		// remove dead connection object
-		console.log("Connection terminated");
 		Hello.log("Connection terminated");
 		Hello.connection = null;
 	});
