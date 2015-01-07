@@ -1,8 +1,30 @@
 var Hello = {
 	connection: null,
+	start_time: null,
 
 	log: function (msg) {
 		$("#log").append( msg );
+	},
+
+	send_ping: function (to) {
+		console.log("send_ping")
+		var message = $iq({
+			to: to,
+			type: "get",
+			id: "ping1"
+		}).c("ping", {xmlns: "urn:xmpp:ping"});
+		Hello.log("sending ping to : " + to + ".");
+		Hello.start_time = (new Date()).getTime();
+		Hello.connection.send(message);
+	},
+
+	handle_pong: function (iq) {
+		console.log("handle_pong")
+		var elapsed = (new Date()).getTime() - Hello.start_time;
+		Hello.log("the time to handle a ping is: " + elapsed + "" )
+		var pong = $iq({to: $(iq).attr("from"), type: "result", id: $(iq).attr("id")});
+		conn.send(pong);
+		return true;
 	}
 };
 
@@ -41,8 +63,11 @@ $(function () {
 
 	$(document).bind("connected", function () {
 		// inform the user
-		console.log("Connection established");
 		Hello.log("Connection established");
+		var domain = Strophe.getDomainFromJID(Hello.connection.jid)
+		Hello.connection.addHandler(Hello.handle_pong, null, "iq", null, "ping1");
+		console.log("Connection established");
+		Hello.send_ping(domain);
 	});
 
 	$(document).bind("disconnected", function () {
@@ -51,6 +76,10 @@ $(function () {
 		Hello.log("Connection terminated");
 		Hello.connection = null;
 	});
+
+	//  daniel@martinagehwolf-macbook.local
+
+
 
 
 
