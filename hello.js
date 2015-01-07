@@ -7,7 +7,7 @@ var Hello = {
 	},
 
 	send_ping: function (to) {
-		console.log("send_ping")
+		console.log("send_ping");
 		var message = $iq({
 			to: to,
 			type: "get",
@@ -19,9 +19,9 @@ var Hello = {
 	},
 
 	handle_pong: function (iq) {
-		console.log("handle_pong")
+		console.log("handle_pong");
 		var elapsed = (new Date()).getTime() - Hello.start_time;
-		Hello.log("the time to handle a ping is: " + elapsed + "" )
+		Hello.log("the time to handle a ping is: " + elapsed + "" );
 		var pong = $iq({to: $(iq).attr("from"), type: "result", id: $(iq).attr("id")});
 		conn.send(pong);
 		return true;
@@ -64,10 +64,12 @@ $(function () {
 	$(document).bind("connected", function () {
 		// inform the user
 		Hello.log("Connection established");
-		var domain = Strophe.getDomainFromJID(Hello.connection.jid)
-		Hello.connection.addHandler(Hello.handle_pong, null, "iq", null, "ping1");
 		console.log("Connection established");
-		Hello.send_ping(domain);
+		
+		var handler = Hello.connection.addHandler(Hello.handle_pong, null, "iq", null, "ping1");
+		console.log("The handler for connection is: ");
+		console.dir(handler);
+		Hello.send_ping(Strophe.getDomainFromJID(Hello.connection.jid));
 	});
 
 	$(document).bind("disconnected", function () {
